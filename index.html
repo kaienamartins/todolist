@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./styles.css" />
+    <title>ToDo List</title>
+</head>
+
+
+<body>
+    <div class="wrapper">
+        <header>
+            <img src="./assets/todo-log.svg" />
+        </header>
+
+        <main>
+            <form class="new_task_form">
+                <input type="text" placeholder="Adicione uma nova tarefa" />
+                <button type="submit" disabled>Criar <i class="ph-bold ph-plus-circle"></i>
+                </button>
+            </form>
+            <section class="counter">
+                <p>
+                    <strong>Tarefas criadas</strong>
+                    <span>3</span>
+                </p>
+                <p>
+                    <strong>Tarefas concluídas</strong>
+                    <span>4</span>
+                </p>
+            </section>
+            <section class="empty_tasks">
+                <img src="./assets/empty-tasks.svg" />
+                <div>
+                    <p>Você ainda não tem tarefas cadastradas</p>
+                    <p>Crie tarefas e organize seus itens a fazer</p>
+                </div>
+            </section>
+            <ul class="tasks_list">
+                <li class="task">
+                    <p>Lorem, ipsum dolor.</p>
+                </li>
+            </ul>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</body>
+
+</html>
