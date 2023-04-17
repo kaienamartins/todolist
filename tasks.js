@@ -103,6 +103,13 @@ function addTask(event) {
 
   taskData.push(newTask);
   const taskElement = createNewTaskEl(newTask.name, newTask.id);
+
+  //verificação para impedir a criação de tarefas sem nome
+  if (newTask.name === "" || newTask.name === undefined) {
+    alert("Você deve informar um nome para a tarefa");
+    return;
+  }
+
   taskList.appendChild(taskElement);
   addTaskInput.value = "";
   counter();
