@@ -2,12 +2,15 @@ function uid() {
   return Date.now().toString(16) + Math.random().toString(16).substring(2);
 }
 
+let taskData = JSON.parse(localStorage.getItem("Tasks")) || [];
+
 const addTaskInput = document.getElementById("task_input");
 const addTaskButton = document.getElementsByTagName("button");
 const taskList = document.getElementById("tasks_list");
 const todoCounterText = document.getElementById("todo_count");
 const doneCounterText = document.getElementById("done_count");
 const emptyTasks = document.getElementById("empty_tasks");
+
 function verifyIfListIsEmpty() {
   if (taskData.length === 0) {
     emptyTasks.classList.remove("hidden");
@@ -112,7 +115,7 @@ function addTask(event) {
   addTaskInput.value = "";
   counter();
   verifyIfListIsEmpty();
-  
+  localStorage.setItem("Tasks", JSON.stringify(taskData));
 }
 
 function completeTask(event) {
@@ -136,6 +139,7 @@ function completeTask(event) {
       item.toDo = false;
     }
   });
+  localStorage.setItem("Tasks", JSON.stringify(taskData));
   counter();
 }
 
@@ -156,6 +160,7 @@ function incompleteTask(event) {
       item.toDo = true;
     }
   });
+  localStorage.setItem("Tasks", JSON.stringify(taskData));
   counter();
 }
 
