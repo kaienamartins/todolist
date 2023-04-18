@@ -2,8 +2,6 @@ function uid() {
   return Date.now().toString(16) + Math.random().toString(16).substring(2);
 }
 
-let taskData = JSON.parse(localStorage.getItem('Tasks')) || [];
-
 const addTaskInput = document.getElementById("task_input");
 const addTaskButton = document.getElementsByTagName("button");
 const taskList = document.getElementById("tasks_list");
@@ -114,7 +112,7 @@ function addTask(event) {
   addTaskInput.value = "";
   counter();
   verifyIfListIsEmpty();
-  localStorage.setItem('Tasks', JSON.stringify(taskData));
+  
 }
 
 function completeTask(event) {
@@ -174,7 +172,6 @@ function deleteTask(event) {
 
   counter();
   verifyIfListIsEmpty();
-  //localStorage.setItem('Tasks', JSON.stringify(taskData));
 }
 
 for (const task of taskData) {
