@@ -2,18 +2,7 @@ function uid() {
   return Date.now().toString(16) + Math.random().toString(16).substring(2);
 }
 
-let taskData = [
-  {
-    id: uid(),
-    name: "Estudar",
-    toDo: true,
-  },
-  {
-    id: uid(),
-    name: "Entrar na daily",
-    toDo: true,
-  },
-];
+let taskData = JSON.parse(localStorage.getItem('Tasks')) || [];
 
 const addTaskInput = document.getElementById("task_input");
 const addTaskButton = document.getElementsByTagName("button");
@@ -21,7 +10,6 @@ const taskList = document.getElementById("tasks_list");
 const todoCounterText = document.getElementById("todo_count");
 const doneCounterText = document.getElementById("done_count");
 const emptyTasks = document.getElementById("empty_tasks");
-
 function verifyIfListIsEmpty() {
   if (taskData.length === 0) {
     emptyTasks.classList.remove("hidden");
@@ -93,7 +81,7 @@ function createNewTaskEl(taskName, taskId) {
 function addTask(event) {
   event.preventDefault();
 
-  const newTaskName = addTaskInput.value;
+  let newTaskName = addTaskInput.value;
 
   const newTask = {
     id: uid(),
@@ -106,7 +94,19 @@ function addTask(event) {
 
   //verificação para impedir a criação de tarefas sem nome
   if (newTask.name === "" || newTask.name === undefined) {
+    addTaskInput.setAttribute(
+      "style",
+      "border: 2px solid #DB0F27;",
+      "transition: all 0.5s ease-in-out;"
+    );
     alert("Você deve informar um nome para a tarefa");
+    setInterval(() => {
+      addTaskInput.setAttribute(
+        "style",
+        "border: 2px solid rgba(255,255,255,.2);",
+        "transition: all 0.5s ease-in-out;"
+      );
+    }, 5000);
     return;
   }
 
@@ -114,6 +114,7 @@ function addTask(event) {
   addTaskInput.value = "";
   counter();
   verifyIfListIsEmpty();
+  localStorage.setItem('Tasks', JSON.stringify(taskData));
 }
 
 function completeTask(event) {
@@ -139,6 +140,7 @@ function completeTask(event) {
   });
   counter();
 }
+
 function incompleteTask(event) {
   const doneIcon = event.target;
   doneIcon.classList.add("hidden");
@@ -156,7 +158,6 @@ function incompleteTask(event) {
       item.toDo = true;
     }
   });
-
   counter();
 }
 
@@ -173,6 +174,7 @@ function deleteTask(event) {
 
   counter();
   verifyIfListIsEmpty();
+  //localStorage.setItem('Tasks', JSON.stringify(taskData));
 }
 
 for (const task of taskData) {
