@@ -129,22 +129,22 @@ function addTask(event) {
   const taskElement = createNewTaskEl(newTask.name, newTask.id);
 
   //verificação para impedir a criação de tarefas sem nome
-  // if (newTask.name === "" || newTask.name === undefined) {
-  //   addTaskInput.setAttribute(
-  //     "style",
-  //     "border: 2px solid #DB0F27;",
-  //     "transition: all 0.5s ease-in-out;"
-  //   );
-  //   alert("Você deve informar um nome para a tarefa");
-  //   setInterval(() => {
-  //     addTaskInput.setAttribute(
-  //       "style",
-  //       "border: 2px solid rgba(255,255,255,.2);",
-  //       "transition: all 0.5s ease-in-out;"
-  //     );
-  //   }, 5000);
-  //   return;
-  // }
+  if (newTask.name === "" || newTask.name === undefined) {
+    addTaskInput.setAttribute(
+      "style",
+      "border: 2px solid #DB0F27;",
+      "transition: all 0.5s ease-in-out;"
+    );
+    alert("Você deve informar um nome para a tarefa");
+    setInterval(() => {
+      addTaskInput.setAttribute(
+        "style",
+        "border: 2px solid rgba(255,255,255,.2);",
+        "transition: all 0.5s ease-in-out;"
+      );
+    }, 5000);
+    return;
+  }
 
   taskList.appendChild(taskElement);
   localStorage.setItem("Tasks", JSON.stringify(taskData));
