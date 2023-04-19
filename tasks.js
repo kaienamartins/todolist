@@ -40,40 +40,75 @@ counter();
 
 function createNewTaskEl(taskName, taskId) {
   let task = document.createElement("li");
+
   task.classList.add("task");
+
   task.classList.add("todo");
+
   task.setAttribute("id", taskId);
 
-  let leftContent = document.createElement("div");
-  leftContent.classList.add("left_content");
-
-  let todoIcon = document.createElement("i");
-  todoIcon.classList.add("ph-duotone");
-  todoIcon.classList.add("ph-circle-dashed");
-  todoIcon.classList.add("check_btn");
-  todoIcon.addEventListener("click", completeTask);
-
   let doneIcon = document.createElement("i");
+
   doneIcon.classList.add("ph-duotone");
+
   doneIcon.classList.add("ph-check-circle");
+
   doneIcon.classList.add("check_btn");
+
   doneIcon.classList.add("hidden");
+
   doneIcon.addEventListener("click", incompleteTask);
 
   let name = document.createElement("p");
+
   name.innerHTML = taskName;
 
+  let leftContent = document.createElement("div");
+
+  leftContent.classList.add("left_content");
+
+  let todoIcon = document.createElement("i");
+
+  todoIcon.classList.add("ph-duotone");
+
+  todoIcon.classList.add("ph-circle-dashed");
+
+  todoIcon.classList.add("check_btn");
+
+  todoIcon.addEventListener("click", completeTask);
+
   let deleteIcon = document.createElement("i");
+
   deleteIcon.classList.add("ph-duotone");
+
   deleteIcon.classList.add("ph-trash");
+
   deleteIcon.classList.add("delete_btn");
+
   deleteIcon.addEventListener("click", deleteTask);
 
+  const taskDone = taskData.find((item) => item.id === taskId);
+
+  if (taskDone.toDo == false) {
+    task.classList.add("done");
+
+    task.classList.remove("todo");
+
+    name.classList.add("strikethrough");
+
+    todoIcon.classList.add("hidden");
+
+    doneIcon.classList.remove("hidden");
+  }
+
   leftContent.appendChild(todoIcon);
+
   leftContent.appendChild(doneIcon);
+
   leftContent.appendChild(name);
 
   task.appendChild(leftContent);
+
   task.appendChild(deleteIcon);
 
   return task;
@@ -94,28 +129,28 @@ function addTask(event) {
   const taskElement = createNewTaskEl(newTask.name, newTask.id);
 
   //verificação para impedir a criação de tarefas sem nome
-  if (newTask.name === "" || newTask.name === undefined) {
-    addTaskInput.setAttribute(
-      "style",
-      "border: 2px solid #DB0F27;",
-      "transition: all 0.5s ease-in-out;"
-    );
-    alert("Você deve informar um nome para a tarefa");
-    setInterval(() => {
-      addTaskInput.setAttribute(
-        "style",
-        "border: 2px solid rgba(255,255,255,.2);",
-        "transition: all 0.5s ease-in-out;"
-      );
-    }, 5000);
-    return;
-  }
+  // if (newTask.name === "" || newTask.name === undefined) {
+  //   addTaskInput.setAttribute(
+  //     "style",
+  //     "border: 2px solid #DB0F27;",
+  //     "transition: all 0.5s ease-in-out;"
+  //   );
+  //   alert("Você deve informar um nome para a tarefa");
+  //   setInterval(() => {
+  //     addTaskInput.setAttribute(
+  //       "style",
+  //       "border: 2px solid rgba(255,255,255,.2);",
+  //       "transition: all 0.5s ease-in-out;"
+  //     );
+  //   }, 5000);
+  //   return;
+  // }
 
   taskList.appendChild(taskElement);
+  localStorage.setItem("Tasks", JSON.stringify(taskData));
   addTaskInput.value = "";
   counter();
   verifyIfListIsEmpty();
-  localStorage.setItem("Tasks", JSON.stringify(taskData));
 }
 
 function completeTask(event) {
@@ -134,11 +169,9 @@ function completeTask(event) {
   const doneIcon = todoIcon.parentNode.childNodes[1];
   doneIcon.classList.remove("hidden");
 
-  taskData.find((item) => {
-    if (item.id === taskToCompletId) {
-      item.toDo = false;
-    }
-  });
+  const task = taskData.find((item) => item.id === taskToCompletId);
+
+  task.toDo = false;
   localStorage.setItem("Tasks", JSON.stringify(taskData));
   counter();
 }
@@ -155,11 +188,9 @@ function incompleteTask(event) {
   const todoIcon = doneIcon.parentNode.childNodes[0];
   todoIcon.classList.remove("hidden");
 
-  taskData.find((item) => {
-    if (item.id === taskToIncompleteId) {
-      item.toDo = true;
-    }
-  });
+  const task = taskData.find((item) => item.id === taskToIncompleteId);
+
+  task.toDo = true;
   localStorage.setItem("Tasks", JSON.stringify(taskData));
   counter();
 }
@@ -174,7 +205,7 @@ function deleteTask(event) {
 
   taskData = tasksWithoutDeletedOne;
   taskList.removeChild(taskToDelete);
-
+  localStorage.setItem("Tasks", JSON.stringify(taskData));
   counter();
   verifyIfListIsEmpty();
 }

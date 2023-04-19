@@ -232,7 +232,7 @@ header {
 
 .done div .strikethrough {
   text-decoration: line-through;
-  color: var(--);
+  color: var(--gray-200);
 }
 
 .done .check_btn {
