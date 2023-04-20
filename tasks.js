@@ -43,7 +43,7 @@ function createNewTaskEl(taskName, taskId) {
 
   task.classList.add("task");
   task.classList.add("todo");
-  
+
   task.setAttribute("id", taskId);
 
   let doneIcon = document.createElement("i");
@@ -99,17 +99,8 @@ function addTask(event) {
 
   let newTaskName = addTaskInput.value;
 
-  const newTask = {
-    id: uid(),
-    name: newTaskName,
-    toDo: true,
-  };
-
-  taskData.push(newTask);
-  const taskElement = createNewTaskEl(newTask.name, newTask.id);
-
-  //verificação para impedir a criação de tarefas sem nome
-  if (newTask.name === "" || newTask.name === undefined) {
+  // verificação para impedir a criação de tarefas sem nome
+  if (!newTaskName || newTaskName.trim() === "") {
     addTaskInput.setAttribute(
       "style",
       "border: 2px solid #DB0F27;",
@@ -125,6 +116,15 @@ function addTask(event) {
     }, 5000);
     return;
   }
+
+  const newTask = {
+    id: uid(),
+    name: newTaskName,
+    toDo: true,
+  };
+
+  taskData.push(newTask);
+  const taskElement = createNewTaskEl(newTask.name, newTask.id);
 
   taskList.appendChild(taskElement);
   localStorage.setItem("Tasks", JSON.stringify(taskData));
